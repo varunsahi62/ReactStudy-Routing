@@ -21,13 +21,24 @@ export default function Clock(){
     let [myName, setMyName] = useState();
 
     function getName(event){
-        setName(event.target.value)
+        setName(event.target.value);
     }
 
     function handleSubmit(event){
-        setMyName(name)
+        setMyName(name);
 
         event.preventDefault();
+    }
+
+    // mouse down
+    const [isMouseDown, setMouseDown] = useState(false);
+
+    function handleMouseDown(){
+        setMouseDown(true);
+    }
+
+    function handleMouseUp(){
+        setMouseDown(false);
     }
 
     return(
@@ -35,7 +46,15 @@ export default function Clock(){
             <h1 className="clock-heading-style"> Hello {myName}, it's {time}</h1>
             <form action="/" onSubmit={handleSubmit}>
                 <input onChange={getName} type="text" placeholder="your name"/>
-                <button type="submit">Set Name</button>
+                <button 
+                    type="submit"
+                    style={{backgroundColor: isMouseDown? "rgba(0, 0, 0, 0.3)" : "transparent"}}
+                    onMouseDown={handleMouseDown}
+                    onMouseUp={handleMouseUp}
+                    onKeyDown={handleMouseDown}
+                    onKeyUp={handleMouseUp}
+                >Set Name
+                </button>
             </form>
         </div>
     );
